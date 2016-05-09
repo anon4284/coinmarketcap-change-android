@@ -13,7 +13,7 @@ public class CoinService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //TODO do something useful
-        CoinChange change = new CoinChange(this, "trumpcoin");
+        CoinChange change = new CoinChange(this, "enter coin name here");
         return Service.START_STICKY;
     }
 
