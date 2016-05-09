@@ -4,6 +4,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,26 +33,14 @@ public class CoinChange {
     public CoinChange(Context context, String coin) {
         mainContext = context;
         Coin = coin;
-        Counter = 0;
-
-        Timer timer = new Timer();
-
-        TimerTask hourlyTask = new TimerTask() {
-            @Override
-            public void run() {
-                GetAndNotify();
-            }
-        };
-        timer.schedule(hourlyTask, 01, 1000*60*60);
-
+        Counter = 1;
     }
 
-    public void GetAndNotify() {
-
+    public String GetChange() {
         HttpURLConnection connection = null;
         try {
-            String ip = "";
-            URL url = new URL("http://"+ ip +":5000/change?coin="+Coin);
+            String ip = "52.29.207.160";
+            URL url = new URL("http://"+ ip +":7001/change?coin="+Coin);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
@@ -58,14 +50,17 @@ public class CoinChange {
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 
-            String response = rd.readLine();
-            Notification not = new Notification(mainContext, Coin, response, Counter);
-            Counter++;
+
+
+            return rd.readLine();
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return "false";
     }
 
 }
